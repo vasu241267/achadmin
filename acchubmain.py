@@ -115,7 +115,8 @@ def otp_monitor_acchubb():
     f"🌍 <b>Country:</b> <b>{otp_entry.get('country_name')}</b>\n\n"
     f"🔑 <b>OTP:</b> <blockquote>{html.escape(otp_code)}</blockquote>\n"
     "━━━━━━━━━━━━━━━━━━━━━━\n"
-    "⚡️ <i>Powered by Acchub 🔱</i>\n"
+    "⚡️ <i>Powered by</i> <a href='https://t.me/Vxxwo'>Acchub 🔱</a>\n"
+
     "━━━━━━━━━━━━━━━━━━━━━━"
 )
 
@@ -138,7 +139,7 @@ def otp_monitor_acchubb():
     f"🌍 <b>Country:</b> <b>{otp_entry.get('country_name')}</b>\n\n"
     f"🔑 <b>OTP:</b> <blockquote>{html.escape(otp_code)}</blockquote>\n"
     "━━━━━━━━━━━━━━━━━━━━━━\n"
-    "⚡️ <i>Powered by Acchub 🔱 </i>\n"
+    "⚡️ <i>Powered by</i> <a href='https://t.me/Vxxwo'>Acchub 🔱</a>\n"
     "━━━━━━━━━━━━━━━━━━━━━━"
 )
 
@@ -160,7 +161,7 @@ def otp_monitor_acchubb():
     f"🌍 <b>Country:</b> <b>{otp_entry.get('country_name')}</b>\n\n"
     f"🔑 <b>OTP:</b> <blockquote>{html.escape(otp_code)}</blockquote>\n"
     "━━━━━━━━━━━━━━━━━━━━━━\n"
-    "⚡️ <i>Powered by Acchub ❤️</i>\n"
+    "⚡️ <i>Powered by</i> <a href='https://t.me/Vxxwo'>Acchub 🔱</a>\n"
     "━━━━━━━━━━━━━━━━━━━━━━"
 )
                 send_telegram_message(msg)
