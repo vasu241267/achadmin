@@ -301,8 +301,8 @@ async def send_number_message(query, data, country_id, carrier_id, changed=False
     )
     keyboard = [
         [
-            InlineKeyboardButton("📩 View OTP", url="https://t.me/+bzv2oFwslWI3Y2I1"),
-            InlineKeyboardButton("📢 Main Channel", url="https://t.me/ddxotp")
+            InlineKeyboardButton("📩 View OTP", url="https://t.me/Acchubotp"),
+            InlineKeyboardButton("📢 Main Channel", url="https://t.me/esoftitacchubio")
         ],
         [
             InlineKeyboardButton("🔄 Change Number", callback_data="change_number")
