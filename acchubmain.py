@@ -7,8 +7,8 @@ from flask import Flask, Response
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 import html  
-# ====== CONFIG ======
-import os
+import time
+last_change_time = {}
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 AUTH_TOKEN = os.getenv("AUTH_TOKEN")
@@ -211,13 +211,23 @@ def paginate_countries(page=0):
     countries = get_countries()
     start = page * COUNTRIES_PER_PAGE
     end = start + COUNTRIES_PER_PAGE
+
     buttons = [
         [InlineKeyboardButton(c["text"], callback_data=f"country|{c['id']}")]
         for c in countries[start:end]
     ]
+
+    nav_buttons = []
+    if page > 0:
+        nav_buttons.append(InlineKeyboardButton("⬅ Back", callback_data=f"more_countries|{page-1}"))
     if end < len(countries):
-        buttons.append([InlineKeyboardButton("➡ More", callback_data=f"more_countries|{page+1}")])
+        nav_buttons.append(InlineKeyboardButton("➡ More", callback_data=f"more_countries|{page+1}"))
+
+    if nav_buttons:
+        buttons.append(nav_buttons)
+
     return buttons
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = paginate_countries(0)
@@ -276,16 +286,23 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             await query.edit_message_text("❌ Numbers currently not available.")
 
+
+    elif action == "more_countries":
+      page = int(values[0])
+      keyboard = paginate_countries(page)
+      await query.edit_message_text("🌍 Select a country:", reply_markup=InlineKeyboardMarkup(keyboard))
+
+
 async def send_number_message(query, data, country_id, carrier_id, changed=False):
     msg = (
         ("🔄 <b>Number Changed!</b>\n\n" if changed else "✅ <b>Number Added Successfully!</b>\n\n") +
         f"📞 <b>Number:</b> <code>{data.get('did')}</code>\n"
-        f"<i>Powered by @esoftitacchubio ❤️</i>"
+        f"<i>Powered By @esoftitacchubio ❤️</i>"
     )
     keyboard = [
         [
-            InlineKeyboardButton("📩 View OTP", url="https://t.me/Acchubotp"),
-            InlineKeyboardButton("📢 Main Channel", url="https://t.me/esoftitacchubio")
+            InlineKeyboardButton("📩 View OTP", url="https://t.me/+bzv2oFwslWI3Y2I1"),
+            InlineKeyboardButton("📢 Main Channel", url="https://t.me/ddxotp")
         ],
         [
             InlineKeyboardButton("🔄 Change Number", callback_data="change_number")
@@ -295,6 +312,49 @@ async def send_number_message(query, data, country_id, carrier_id, changed=False
 # =========================================
 # ====== Main start functions ============
 # =========================================
+
+from telegram.ext import CommandHandler
+
+async def search_country(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        await update.message.reply_text("🔍 Usage: /search <country name>")
+        return
+
+    query = " ".join(context.args).lower()
+    countries = get_countries()
+
+    matched = [c for c in countries if query in c["text"].lower()]
+    if not matched:
+        await update.message.reply_text("❌ Country not found.")
+        return
+
+    # Agar multiple matches mile to list dikhao
+    if len(matched) > 1:
+        keyboard = [[InlineKeyboardButton(c["text"], callback_data=f"country|{c['id']}")] for c in matched]
+        await update.message.reply_text("🌍 Select a country:", reply_markup=InlineKeyboardMarkup(keyboard))
+        return
+
+    # Single match → carrier selection
+    country = matched[0]
+    carriers = get_carriers(country["id"])
+    if not carriers:
+        res = add_number(country["id"], "")
+        if res.get("meta") == 200 and res.get("data"):
+            await send_number_message(update, res["data"], country["id"], "")
+        else:
+            await update.message.reply_text("❌ Numbers currently not available.")
+        return
+
+    keyboard = [
+        [InlineKeyboardButton(c["text"], callback_data=f"carrier|{country['id']}|{c['id']}")]
+        for c in carriers
+    ]
+    await update.message.reply_text("🚚 Select a carrier:", reply_markup=InlineKeyboardMarkup(keyboard))
+
+# Start bot function me handler add karo
+
+
+
 def start_otp_thread():
     threading.Thread(target=otp_monitor_acchubb, daemon=True).start()
 
@@ -302,6 +362,7 @@ def start_bot():
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button))
+    application.add_handler(CommandHandler("search", search_country))
     application.run_polling()
 
 if __name__ == "__main__":
@@ -312,6 +373,12 @@ if __name__ == "__main__":
 
     # Start Flask server in background (for Render health checks)
     threading.Thread(
+        target=lambda: app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)), threaded=True),
+        daemon=True
+    ).start()
+
+    # Start Telegram bot in main thread
+    start_bot()
         target=lambda: app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)), threaded=True),
         daemon=True
     ).start()
