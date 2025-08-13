@@ -379,9 +379,3 @@ if __name__ == "__main__":
 
     # Start Telegram bot in main thread
     start_bot()
-        target=lambda: app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)), threaded=True),
-        daemon=True
-    ).start()
-
-    # Start Telegram bot in main thread
-    start_bot()
