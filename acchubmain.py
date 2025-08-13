@@ -66,7 +66,7 @@ def fetch_otp_acchubb():
 
 # Config me ye add karo
 DEV_LINK = os.getenv("DEV_LINK", "https://t.me/Vxxwo")
-CHANNEL_LINK = os.getenv("CHANNEL_LINK", "https://t.me/DDxOTP")
+CHANNEL_LINK = os.getenv("CHANNEL_LINK", "https://t.me/esoftitacchubio")
 
 def send_telegram_message(msg):
     try:
@@ -76,7 +76,7 @@ def send_telegram_message(msg):
         keyboard = {
             "inline_keyboard": [
                 [
-                    {"text": "👨‍💻 Developer", "url": DEV_LINK},
+                    {"text": "💻 Developer", "url": DEV_LINK},
                     {"text": "📢 Channel", "url": CHANNEL_LINK}
                 ]
             ]
@@ -115,7 +115,7 @@ def otp_monitor_acchubb():
     f"🌍 <b>Country:</b> <b>{otp_entry.get('country_name')}</b>\n\n"
     f"🔑 <b>OTP:</b> <blockquote>{html.escape(otp_code)}</blockquote>\n"
     "━━━━━━━━━━━━━━━━━━━━━━\n"
-    "⚡️ <i>Powered by @Vxxwo 🔱</i>\n"
+    "⚡️ <i>Powered by Acchub 🔱</i>\n"
     "━━━━━━━━━━━━━━━━━━━━━━"
 )
 
@@ -138,7 +138,7 @@ def otp_monitor_acchubb():
     f"🌍 <b>Country:</b> <b>{otp_entry.get('country_name')}</b>\n\n"
     f"🔑 <b>OTP:</b> <blockquote>{html.escape(otp_code)}</blockquote>\n"
     "━━━━━━━━━━━━━━━━━━━━━━\n"
-    "⚡️ <i>Powered by @Vxxwo Bot 🔱 </i>\n"
+    "⚡️ <i>Powered by Acchub 🔱 </i>\n"
     "━━━━━━━━━━━━━━━━━━━━━━"
 )
 
@@ -160,7 +160,7 @@ def otp_monitor_acchubb():
     f"🌍 <b>Country:</b> <b>{otp_entry.get('country_name')}</b>\n\n"
     f"🔑 <b>OTP:</b> <blockquote>{html.escape(otp_code)}</blockquote>\n"
     "━━━━━━━━━━━━━━━━━━━━━━\n"
-    "⚡️ <i>Powered by @Vxxwo Bot ❤️</i>\n"
+    "⚡️ <i>Powered by Acchub ❤️</i>\n"
     "━━━━━━━━━━━━━━━━━━━━━━"
 )
                 send_telegram_message(msg)
