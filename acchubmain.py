@@ -65,7 +65,7 @@ def fetch_otp_acchubb():
     return []
 
 # Config me ye add karo
-DEV_LINK = os.getenv("DEV_LINK", "https://t.me/Vxxwo")
+DEV_LINK = os.getenv("DEV_LINK", "https://t.me/Esoftitacchub")
 CHANNEL_LINK = os.getenv("CHANNEL_LINK", "https://t.me/esoftitacchubio")
 
 def send_telegram_message(msg):
