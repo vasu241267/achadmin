@@ -12,7 +12,7 @@ import os
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 AUTH_TOKEN = os.getenv("AUTH_TOKEN")
-GROUP_ID = int(os.getenv("GROUP_ID", -1002311125652))
+GROUP_ID = int(os.getenv("GROUP_ID", -1002559623917))
 API_URL = "https://raazit.acchub.io/api/"
 BASE_URL = "https://raazit.acchub.io/api/sms"
 FETCH_INTERVAL = 2  # seconds
