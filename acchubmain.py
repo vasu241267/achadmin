@@ -224,14 +224,14 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         msg = (
             f"✅ <b>Number Added Successfully!</b>\n\n"
             f"📞 <b>Number:</b> <code>{data.get('did')}</code>\n"
-            f"<i>Powered by @vxxwo ❤️</i>"
+            f"<i>Powered by @esoftitacchubio ❤️</i>"
         )
 
         # Inline button "Get SMS Here"
         keyboard = [
     [
-        InlineKeyboardButton("📩 View OTP", url="https://t.me/+bzv2oFwslWI3Y2I1"),
-        InlineKeyboardButton("📩 Main Channel", url="https://t.me/ddxotp")
+        InlineKeyboardButton("📩 View OTP", url="https://t.me/Acchubotp"),
+        InlineKeyboardButton("📩 Main Channel", url="https://t.me/esoftitacchubio")
     ]
 ]
         await query.edit_message_text(msg, parse_mode="HTML", reply_markup=InlineKeyboardMarkup(keyboard))
